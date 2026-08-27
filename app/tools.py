@@ -82,13 +82,22 @@ def analyze_listing_images(image_descriptions: List[str], listing_title: str = "
     """
     
     try:
-        response = client.models.generate_content(
-            model="gemini-2.5-pro",
-            contents=prompt,
-            config=types.GenerateContentConfig(
-                response_mime_type="application/json"
+        try:
+            response = client.models.generate_content(
+                model="gemini-3.6-flash",
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    response_mime_type="application/json"
+                )
             )
-        )
+        except Exception:
+            response = client.models.generate_content(
+                model="gemini-2.5-flash",
+                contents=prompt,
+                config=types.GenerateContentConfig(
+                    response_mime_type="application/json"
+                )
+            )
         return json.loads(response.text)
     except Exception as e:
         scenes = []

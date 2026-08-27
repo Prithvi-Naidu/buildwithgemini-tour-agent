@@ -2,7 +2,7 @@
 
 # 🏡 Airbnb TourCraft AI — 3D Spatial Video Tour Generator
 
-[![Build with Gemini](https://img.shields.io/badge/Build%20with-Gemini%202.5%20Pro-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://deepmind.google/technologies/gemini/)
+[![Build with Gemini](https://img.shields.io/badge/Build%20with-Gemini%203.6%20Flash-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://deepmind.google/technologies/gemini/)
 [![Vertex AI Veo 3.1](https://img.shields.io/badge/Video%20Gen-Veo%203.1%20Image--to--Video-0F9D58?style=for-the-badge&logo=googlecloud&logoColor=white)](https://cloud.google.com/vertex-ai)
 [![Google ADK Framework](https://img.shields.io/badge/Agent-Google%20ADK%20Framework-FF6F00?style=for-the-badge&logo=python&logoColor=white)](https://github.com/google/agent-development-kit)
 [![Google Cloud TTS](https://img.shields.io/badge/Audio-Cloud%20Text--to--Speech-EA4335?style=for-the-badge&logo=googlecloud&logoColor=white)](https://cloud.google.com/text-to-speech)
@@ -24,9 +24,9 @@
 
 ## 📖 Executive Summary & Overview
 
-**Airbnb TourCraft AI** is an agentic AI video production platform built on the **Google Agent Development Kit (ADK)** framework. Powered by Google's top-tier **Gemini 2.5 Pro** reasoning model, it solves a major friction point in real estate marketing: **turning static 2D photos into continuous, photorealistic 3D spatial room walkthrough video tours**.
+**Airbnb TourCraft AI** is an agentic AI video production platform built on the **Google Agent Development Kit (ADK)** framework. Powered by **Gemini 3.6 Flash**, it solves a major friction point in real estate marketing: **turning static 2D photos into continuous, photorealistic 3D spatial room walkthrough video tours**.
 
-By orchestrating **Gemini 2.5 Pro**, **Vertex AI Veo 3.1**, and **Google Cloud Text-to-Speech**, the agent acts as an autonomous AI Director—analyzing room photos, planning camera flight paths, synthesizing 3D video clips with spatial parallax, generating voiceover narration, and stitching everything into a 1080p video package uploaded directly to Google Cloud Storage.
+By orchestrating **Gemini 3.6 Flash**, **Vertex AI Veo 3.1**, and **Google Cloud Text-to-Speech**, the agent acts as an autonomous AI Director—analyzing room photos, planning camera flight paths, synthesizing 3D video clips with spatial parallax, generating voiceover narration, and stitching everything into a 1080p video package uploaded directly to Google Cloud Storage.
 
 ---
 
@@ -61,7 +61,7 @@ By orchestrating **Gemini 2.5 Pro**, **Vertex AI Veo 3.1**, and **Google Cloud T
                                     ▼
 ┌────────────────────────────────────────────────────────────────────────┐
 │                    Google ADK Agent Orchestrator                       │
-│                         (Gemini 2.5 Pro Model)                         │
+│                       (Gemini 3.6 Flash Model)                         │
 └─────┬─────────────────────────────┬─────────────────────────────┬──────┘
       │                             │                             │
       ▼                             ▼                             ▼
@@ -73,7 +73,7 @@ By orchestrating **Gemini 2.5 Pro**, **Vertex AI Veo 3.1**, and **Google Cloud T
       ▼                             ▼                            ▼
 ┌───────────┐                ┌─────────────┐               ┌────────────┐
 │  Gemini   │                │ Vertex AI   │               │ Google     │
-│  2.5 Pro  │                │  Veo 3.1    │               │ Cloud TTS  │
+│ 3.6 Flash │                │  Veo 3.1    │               │ Cloud TTS  │
 └─────┬─────┘                └──────┬──────┘               └─────┬──────┘
       │                             │                            │
       └──────────────────────┬──────┴────────────────────────────┘
@@ -88,12 +88,12 @@ By orchestrating **Gemini 2.5 Pro**, **Vertex AI Veo 3.1**, and **Google Cloud T
 ┌────────────────────────────────────────────────────────────────────────┐
 │                  Google Cloud Storage (Public Bucket)                  │
 │       (Serves video at storage.googleapis.com/public-tour-videos)      │
-└────────────────────────────────────────────────────────────────────────┘
+└───────────────────────────────────┬────────────────────────────────────┘
 ```
 
-### 🧠 1. Scene Intelligence: Gemini 2.5 Pro (`gemini-2.5-pro`)
-- **Role**: Premium reasoning, multimodal vision, and cinematic motion prompt engineer.
-- **Function**: Leverages Google's flagship **Gemini 2.5 Pro** model to analyze input listing photos, classify room categories (*Living Room, Kitchen, Bedroom, Deck*), structure a cohesive room-by-room walkthrough sequence, and output high-precision JSON containing Veo motion prompts and audio narration scripts.
+### 🧠 1. Scene Intelligence: Gemini 3.6 Flash (`gemini-3.6-flash`)
+- **Role**: High-speed multimodal reasoning and cinematic motion prompt engineer.
+- **Function**: Uses **Gemini 3.6 Flash** to analyze input listing photos, classify room categories (*Living Room, Kitchen, Bedroom, Deck*), structure a cohesive room-by-room walkthrough sequence, and output structured JSON containing Veo motion prompts and audio narration scripts.
 
 ### 🎬 2. 3D Spatial Video Generation: Vertex AI Veo 3.1 (`veo-3.1-fast-generate-001`)
 - **Role**: Photorealistic Image-to-Video synthesis model.
@@ -120,10 +120,10 @@ Here is an example interaction flow inside the **Google ADK Web UI (`http://127.
 👤 User:
 "Here are 7 photos of my Riverside Forest Retreat listing (living room, kitchen, bedroom, bathroom, deck, hot tub, backyard). Create a 3D video walkthrough tour for my listing!"
 
-🤖 Airbnb TourCraft AI Agent (Gemini 2.5 Pro):
+🤖 Airbnb TourCraft AI Agent (Gemini 3.6 Flash):
 "Starting 3D video tour generation for Riverside Forest Retreat!
 
-1. Running analyze_listing_images (Gemini 2.5 Pro)...
+1. Running analyze_listing_images (Gemini 3.6 Flash)...
    ✓ Organized 7 rooms into logical sequence.
    ✓ Crafted Veo 3.1 steadycam 3D motion prompts.
 
