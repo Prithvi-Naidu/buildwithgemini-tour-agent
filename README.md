@@ -10,26 +10,34 @@
 
 <br/>
 
-### 🎬 *Transforming static 2D listing photos into photorealistic, steadycam 3D spatial room walkthrough video tours with AI voiceover narration.*
+### 🎬 *Transforming static 2D real estate photos into photorealistic 3D spatial room walkthrough video tours with AI voiceover narration.*
 
 <br/>
 
 ![3D Veo Walkthrough Demo](demo_preview.gif)
 
-*3D Spatial Room Walkthrough Video generated directly from 2D photos using **Vertex AI Veo 3.1***
+*3D Spatial Room Walkthrough Video generated directly from 2D listing photos using **Vertex AI Veo 3.1***
 
 </div>
 
 ---
 
-## 🍿 Live Video Tour Demos
+## 📖 Executive Summary & Overview
 
-### 🌟 Full 7-Room Stitched 3D Tour Package
-> 🎬 **[Watch Full Property 3D AI Video Tour (1080p MP4)](https://storage.googleapis.com/qwiklabs-gcp-03-ae2ceb20cd60-public-tour-videos/full_property_3d_veo_tour.mp4)**
+**Airbnb TourCraft AI** is an agentic AI video production platform built on the **Google Agent Development Kit (ADK)** framework. It solves a major friction point in real estate marketing: **turning static 2D photos into continuous, photorealistic 3D spatial room walkthrough video tours**.
+
+By orchestrating **Gemini 2.5 Flash**, **Vertex AI Veo 3.1**, and **Google Cloud Text-to-Speech**, the agent acts as an autonomous AI Director—analyzing room photos, planning camera flight paths, synthesizing 3D video clips with spatial parallax, generating voiceover narration, and stitching everything into a 1080p video package uploaded directly to Google Cloud Storage.
+
+---
+
+## 🍿 Live Demos & Sample Video Tours
+
+### 🌟 Full 7-Room Stitched 3D Tour Package (with Voiceover)
+> 🎬 **[Watch Full Property 3D AI Video Tour with Voiceover (1080p MP4)](https://storage.googleapis.com/qwiklabs-gcp-03-ae2ceb20cd60-public-tour-videos/full_property_3d_veo_tour_voiceover.mp4)**
 
 <br/>
 
-### 🎥 Individual 3D AI Scene Video Clips
+### 🎥 Individual 3D AI Room Scene Video Clips
 
 | Scene | Room Space | Veo 3.1 3D Video Clip |
 | :---: | :--- | :--- |
@@ -43,53 +51,100 @@
 
 ---
 
-## ✨ Features & Capabilities
+## 🔬 Deep-Dive Architecture & AI Models Used
 
-- **🧠 Gemini 2.5 Flash Scene Intelligence**: Sequences listing photos into a logical real estate flow and crafts customized 3D motion prompts.
-- **🎬 Vertex AI Veo 3.1 (`veo-3.1-fast-generate-001`)**: Generates 3D spatial room depth, steadycam forward dolly motion, and volumetric lighting directly from 2D images.
-- **🎙️ Google Cloud Text-to-Speech**: Synthesizes professional AI tour guide voiceover narration synchronized with room clips.
-- **🎞️ Automated ffmpeg Video Stitcher**: Merges multi-room 3D video clips and voiceover narration into a single 1080p MP4 package.
-- **☁️ Cloud Storage Publishing**: Directly uploads final tour packages to public Google Cloud Storage (`gs://qwiklabs-gcp-03-ae2ceb20cd60-public-tour-videos`).
-- **💻 ADK Interactive Web UI**: Fully integrated with Google ADK for rich chat and video preview rendering.
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│                   User Interaction (ADK Web UI)                        │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                    Google ADK Agent Orchestrator                       │
+│                        (Gemini 2.5 Flash Model)                        │
+└─────┬─────────────────────────────┬─────────────────────────────┬──────┘
+      │                             │                             │
+      ▼                             ▼                             ▼
+┌───────────┐                ┌─────────────┐               ┌────────────┐
+│ Scene Gen │                │ Veo 3.1 Gen │               │ Audio TTS  │
+│ Tool      │                │ Tool        │               │ Tool       │
+└─────┬─────┘                └──────┬──────┘               └─────┬──────┘
+      │                             │                            │
+      ▼                             ▼                            ▼
+┌───────────┐                ┌─────────────┐               ┌────────────┐
+│  Gemini   │                │ Vertex AI   │               │ Google     │
+│ 2.5 Flash │                │  Veo 3.1    │               │ Cloud TTS  │
+└─────┬─────┘                └──────┬──────┘               └─────┬──────┘
+      │                             │                            │
+      └──────────────────────┬──────┴────────────────────────────┘
+                             │
+                             ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                     ffmpeg Audio/Video Stitcher                        │
+│         (Combines 7 3D clips + 42.7s voiceover into 1080p MP4)        │
+└───────────────────────────────────┬────────────────────────────────────┘
+                             │
+                             ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│                  Google Cloud Storage (Public Bucket)                  │
+│       (Serves video at storage.googleapis.com/public-tour-videos)      │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+### 🧠 1. Scene Intelligence: Gemini 2.5 Flash (`gemini-2.5-flash`)
+- **Role**: Scene sequence planning & cinematic motion prompt engineer.
+- **Function**: Analyzes input listing photos, classifies room categories (*Living Room, Kitchen, Bedroom, Deck*), structures a cohesive room-by-room walkthrough sequence, and outputs structured JSON containing Veo motion prompts and audio narration scripts.
+
+### 🎬 2. 3D Spatial Video Generation: Vertex AI Veo 3.1 (`veo-3.1-fast-generate-001`)
+- **Role**: Photorealistic Image-to-Video synthesis model.
+- **Parameters**: `aspect_ratio="16:9"`, prompt engineering targeting steadycam forward dolly motion and 3D spatial parallax depth.
+- **Function**: Takes 2D room photos as initial input frames and synthesizes true 3D spatial camera walkthrough motion into the room space.
+
+### 🎙️ 3. Voiceover Audio Narration: Google Cloud Text-to-Speech
+- **Role**: High-fidelity AI tour guide speech synthesis.
+- **Voice Model**: `en-US-Journey-F` (Neural voice model).
+- **Function**: Converts script outputs into a 42.7-second MP3 voiceover narration track.
+
+### 🎞️ 4. Video Assembly Pipeline: ffmpeg + Google Cloud Storage
+- **Role**: Video multiplexing & cloud distribution.
+- **Stream Mapping**: `-map 0:v:0 -map 1:a:0` (combining 7 Veo video clips with the TTS audio track).
+- **Output Bucket**: `gs://qwiklabs-gcp-03-ae2ceb20cd60-public-tour-videos/full_property_3d_veo_tour_voiceover.mp4`.
 
 ---
 
-## 🛠️ System Architecture
+## 💻 ADK Web UI Interactive Interaction Example
+
+Here is an example interaction flow inside the **Google ADK Web UI (`http://127.0.0.1:8080`)**:
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│              User / Airbnb Listing Photos              │
-└────────────────────────────┬────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────┐
-│            Gemini 2.5 Flash Vision Model                │
-│    (Sequences scenes & writes 3D motion prompts)       │
-└────────────────────────────┬────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────┐
-│        Vertex AI Veo 3.1 Image-to-Video Model           │
-│    (Generates 3D spatial room walkthrough clips)        │
-└────────────────────────────┬────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────┐
-│            Google Cloud Text-to-Speech                  │
-│       (Synthesizes tour guide audio narration)          │
-└────────────────────────────┬────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────┐
-│             ffmpeg Video Assembly Pipeline              │
-│       (Stitches 7 3D clips + voiceover track)           │
-└────────────────────────────┬────────────────────────────┘
-                             │
-                             ▼
-┌─────────────────────────────────────────────────────────┐
-│            Google Cloud Storage Public Bucket           │
-│         (Serves 1080p video package worldwide)         │
-└─────────────────────────────────────────────────────────┘
+👤 User:
+"Here are 7 photos of my Riverside Forest Retreat listing (living room, kitchen, bedroom, bathroom, deck, hot tub, backyard). Create a 3D video walkthrough tour for my listing!"
+
+🤖 Airbnb TourCraft AI Agent:
+"Starting 3D video tour generation for Riverside Forest Retreat!
+
+1. Running analyze_listing_images...
+   ✓ Organized 7 rooms into logical sequence.
+   ✓ Crafted Veo 3.1 steadycam 3D motion prompts.
+
+2. Running generate_veo_room_video (Veo 3.1)...
+   ✓ Generated Living Room 3D Walkthrough
+   ✓ Generated Chef Kitchen 3D Walkthrough
+   ✓ Generated Master Bedroom 3D Walkthrough
+   ✓ Generated Spa Bathroom 3D Walkthrough
+   ✓ Generated Outdoor Deck 3D Walkthrough
+   ✓ Generated Private Hot Tub 3D Walkthrough
+   ✓ Generated Forest Backyard 3D Walkthrough
+
+3. Running synthesize_tour_voiceover (Cloud TTS)...
+   ✓ Synthesized 42.7s voiceover narration track with voice 'en-US-Journey-F'.
+
+4. Running assemble_tour_walkthrough (ffmpeg & GCS)...
+   ✓ Stitched 7 3D clips + voiceover track into 1080p MP4.
+   ✓ Published to GCS bucket!
+
+🎥 Final 3D Tour Video URL:
+https://storage.googleapis.com/qwiklabs-gcp-03-ae2ceb20cd60-public-tour-videos/full_property_3d_veo_tour_voiceover.mp4"
 ```
 
 ---
