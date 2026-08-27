@@ -257,7 +257,12 @@ def assemble_tour_walkthrough(listing_title: str, scene_videos: List[str], voice
     synthesize_tour_voiceover(voiceover_script)
 
     # 2. Gather Veo 3D video clips or local scene clips
-    clip_files = sorted(glob.glob("/tmp/scene_clip_room_*.mp4") + glob.glob("/tmp/scene_clip_*.mp4"))
+    clip_files = sorted(
+        glob.glob("/tmp/veo_clips/veo_3d_clip_*.mp4") + 
+        glob.glob("/tmp/veo_clips/*.mp4") + 
+        glob.glob("/tmp/scene_clip_room_*.mp4") + 
+        glob.glob("/tmp/scene_clip_*.mp4")
+    )
     
     # 3. Stitch 3D video scene clips together with TTS voiceover track using ffmpeg
     if clip_files:
@@ -266,13 +271,12 @@ def assemble_tour_walkthrough(listing_title: str, scene_videos: List[str], voice
             for clip in clip_files:
                 f.write(f"file '{clip}'\n")
 
-        if os.path.exists(audio_path):
+        if os.path.exists(audio_path) and os.path.getsize(audio_path) > 100:
             cmd_stitch = [
                 "ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", concat_list_path,
                 "-i", audio_path,
-                "-filter_complex", "[0:a]volume=0.10[bg];[1:a]volume=1.5[vo];[bg][vo]amix=inputs=2:duration=first[a]",
-                "-map", "0:v:0", "-map", "[a]",
-                "-c:v", "libx264", "-c:a", "aac", "-b:a", "192k", "-shortest", "-pix_fmt", "yuv420p", local_video_output
+                "-map", "0:v:0", "-map", "1:a:0",
+                "-c:v", "libx264", "-c:a", "aac", "-b:a", "192k", "-pix_fmt", "yuv420p", local_video_output
             ]
         else:
             cmd_stitch = [
