@@ -33,7 +33,8 @@ By orchestrating **Gemini 3.6 Flash**, **Vertex AI Veo 3.1**, and **Google Cloud
 ## 🍿 Live Demos & Sample Video Tours
 
 ### 🌟 Full 7-Room Stitched 3D Tour Package (with Voiceover)
-> 🎬 **[Watch Full Property 3D AI Video Tour with Voiceover (1080p MP4)](https://storage.googleapis.com/qwiklabs-gcp-03-ae2ceb20cd60-public-tour-videos/full_property_3d_veo_tour_voiceover.mp4)**
+> 🎬 **[Watch Full Property 3D AI Video Tour on GitHub (33MB MP4)](full_property_3d_veo_tour_voiceover.mp4)**  
+> 🌐 *GCS Public Mirror: [Full Property 3D Video Tour (1080p MP4)](https://storage.googleapis.com/qwiklabs-gcp-03-ae2ceb20cd60-public-tour-videos/full_property_3d_veo_tour_voiceover.mp4)*
 
 <br/>
 
